@@ -38,8 +38,9 @@ export const pipeconeApiKey =  {
   apiKey: process.env.PINECONE_API_KEY,
 }
 
-export const vectorStoreUrl = {
+export const vectorStoreConfig = {
   url: process.env.VECTOR_STORE_URL,
+  apiKey: process.env.VECTOR_STORE_API_KEY,
 }
 
 export const adminAccount = {

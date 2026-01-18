@@ -1,4 +1,4 @@
-import { googleApiKey, vectorStoreUrl } from "../config/config";
+import { googleApiKey, vectorStoreConfig } from "../config/config";
 import { GoogleGenAI } from "@google/genai";
 import axios from "axios";
 
@@ -10,7 +10,7 @@ const chat = async (message: string): Promise<any> => {
         contents: [message]
     })
 
-    const searchResponse = await axios.post(`${vectorStoreUrl.url}/search`, {
+    const searchResponse = await axios.post(`${vectorStoreConfig.url}/search`, {
         vector: embeddingData?.embeddings[0].values,
         k: 5
     })

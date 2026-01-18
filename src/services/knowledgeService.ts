@@ -1,4 +1,4 @@
-import { googleApiKey, vectorStoreUrl } from "../config/config";
+import { googleApiKey, vectorStoreConfig } from "../config/config";
 import { GoogleGenAI } from "@google/genai";
 import axios from "axios";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
@@ -26,9 +26,13 @@ const storeWebDocument = async (url: string, selector?: SelectorType) => {
 
     const vectors = embeddingData?.embeddings.map((embedding) => embedding.values);
 
-    const response = await axios.post(`${vectorStoreUrl.url}/add_vector`, {
+    const response = await axios.post(`${vectorStoreConfig.url}/add_vector`, {
         texts: texts,
         vectors: vectors
+    }, {
+        headers: {
+            'X-API-Key': vectorStoreConfig.apiKey
+        }
     })
 
     return { texts: texts };
@@ -55,9 +59,13 @@ const storePDFDocument = async (url: string) => {
 
     const vectors = embeddingData?.embeddings.map((embedding) => embedding.values);
 
-    const response = await axios.post(`${vectorStoreUrl.url}/add_vector`, {
+    const response = await axios.post(`${vectorStoreConfig.url}/add_vector`, {
         texts: texts,
         vectors: vectors
+    }, {
+        headers: {
+            'X-API-Key': vectorStoreConfig.apiKey
+        }
     })
 
     return { texts: texts };
@@ -84,9 +92,13 @@ const storeUploadedPDFDocument = async (filePath: string) => {
 
     const vectors = embeddingData?.embeddings.map((embedding) => embedding.values);
 
-    const response = await axios.post(`${vectorStoreUrl.url}/add_vector`, {
+    const response = await axios.post(`${vectorStoreConfig.url}/add_vector`, {
         texts: texts,
         vectors: vectors
+    }, {
+        headers: {
+            'X-API-Key': vectorStoreConfig.apiKey
+        }
     })
 
     return { texts: texts };
