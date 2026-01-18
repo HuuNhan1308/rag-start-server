@@ -1,0 +1,42 @@
+# Multi-stage Dockerfile cho Backend (Node.js)
+# Image size nhỏ hơn, chỉ chứa production dependencies
+
+# Stage 1: Build
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install ALL dependencies (cần cho build)
+RUN npm ci
+
+# Copy source code
+COPY . .
+
+# Build TypeScript
+RUN npm run build
+
+# Stage 2: Production
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Chỉ cài production dependencies
+RUN npm ci --only=production
+
+# Copy built files từ stage builder
+COPY --from=builder /app/dist ./dist
+
+# Copy other necessary files
+COPY --from=builder /app/uploads ./uploads
+
+# Expose port
+EXPOSE 3000
+
+# Start application (chạy từ dist folder)
+CMD ["node", "dist/server.js"]
