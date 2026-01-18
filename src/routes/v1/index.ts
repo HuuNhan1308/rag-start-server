@@ -3,6 +3,7 @@ import authRouter from "./authRoute";
 import chatRouter from "./chatRoute";
 import loaderRouter from "./loaderRoute";
 import knowledgeRouter from "./knowledgeRoute";
+import healthRouter from "./healthRoute";
 
 const appRouter = Router();
 
@@ -22,6 +23,10 @@ const appRoutes = [
   {
     path: "/knowledge",
     router: knowledgeRouter,
+  },
+  {
+    path: "/health-check",
+    router: healthRouter,
   }
 ];
 
