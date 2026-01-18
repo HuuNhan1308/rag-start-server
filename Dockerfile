@@ -1,0 +1,25 @@
+# Dockerfile cho Backend (Node.js)
+# Dùng cho các platform yêu cầu Docker như Railway, Google Cloud Run
+
+FROM node:20-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production
+
+# Copy source code
+COPY . .
+
+# Build TypeScript
+RUN npm run build
+
+# Expose port
+EXPOSE 3000
+
+# Start application
+CMD ["npm", "start"]
